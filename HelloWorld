@@ -1,0 +1,67 @@
+
+#云计算课程主要是初步了解云计算与openstack 了解openstack基本使用，并且了解通过命令行构和openstack创建虚拟机
+#云计算课程还包括openstack的五大组件，了解openstack环境搭建过程
+#***系统要求：CentOS7.6 ***
+
+
+https://www.rdoproject.org/
+
+1.增加交换空间（内存<8G用增加swap避免出错）
+mkdir /data
+dd if=/dev/zero of=/data/swap bs=1024 count=4048000
+mkswap /data/swap 
+swapon /data/swap
+
+vi /etc/fstab 
+/data/swap     swap     swap    defaults  0 0
+
+
+2.关闭SELinux
+setenforce 0
+
+sed -i 's/=enforcing/=disabled/' /etc/selinux/config
+
+
+3. 关闭防火墙、重启网络
+systemctl disable firewalld
+systemctl stop firewalld
+systemctl disable NetworkManager
+systemctl stop NetworkManager
+systemctl enable network
+systemctl start network
+
+
+4.设置主机名
+hostnamectl set-hostname controller
+
+
+5.添加主机映射
+cat << EOF >> /etc/hosts
+192.168.56.126 controller
+EOF
+
+
+6.修改主机源：
+yum install wget -y
+cd /etc/yum.repos.d/
+mv -f /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.backup
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+
+
+7.执行更新命令
+yum update -y
+
+yum install -y centos-release-openstack-rocky
+
+yum update -y
+
+yum install -y openstack-packstack
+
+packstack --allinone
+
+
+等待1小时左右可安装完毕。
+中间若中断，重新运行 packstack --allinone。
