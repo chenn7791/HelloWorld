@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>绑定多个事件与方法</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script>
+        $(function(){
+            $("#myPic").bind('click',{addr:"湖边"},myBindFunc);
+            function myBindFunc(e) {
+                alert("地点：" + e.data.addr);
+            }
+
+
+            })
+
+
+
+    </script>
+</head>
+<body>
+<img id="myPic" src="imgs/pic1.jpg" alt=""/>
+
+</body>
+</html>
+
+<!--bind: function( types, data, fn ) {-->
+<!--return this.on( types, null, data, fn );-->
+<!--}-->
+
+<!--types：绑定事件类型 click-->
+<!--data:参数 自己定义-->
+<!--fn：绑定函数名-->

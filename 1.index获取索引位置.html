@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>index()获取同类元素索引位置</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script>
+        $(function(){
+            $("button").click(function(){
+                var myText="北碚索引值："+
+                                $("#beibei").index();
+                myText+="南岸索引值："+$(".css-index").index($("#nanan"));
+                alert(myText);
+            })
+
+        })
+    </script>
+</head>
+<body>
+<p>1  <h1>ygy</h1>   1</p><p>1&nbsp&nbsp&nbsp&nbsp&nbsp1</p>
+<ul>
+    <li class="css-index">重庆市主城区</li>
+    <li class="css-index" id="yuzhong">渝中区</li>
+    <li class="css-index" id="beibei">北碚区</li>
+    <li class="css-index" id="banan">巴南区</li>
+    <li class="css-index" id="nanan">南岸区</li>
+</ul>
+<button>获取元素在同类元素中索引位置</button>
+
+</body>
+</html>
+
+
+
+
+
+<!--问题：区别究竟是什么？-->
+<!--index() -->
+<!--假如页面中有以下无序列表:-->
+<!--<ul>-->
+    <!--<li id="foo">foo</li>-->
+    <!--<li id="bar">bar</li>-->
+<!--</ul>-->
+<!--若要查找id为bar的1i元素，可以使用以下几干叶t形式来调用.index()方法，结果均为1。-->
+<!--$("li").index(document.getElementById("bar"));  //以DOM对象为参数，返回它在原先集合中的索引-->
+<!--$("li").index($("#bar"));                  //以jQuery对象为参数，返回#bar在所有li中的索引-->
+<!--$("#bar").index("li"));                   //以选择器参数，返回#bar在所有li中的索引-->
+<!--$("#bar").index();                       //未传递参数，返回#bar元素在同辈中的索引-->
